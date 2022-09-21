@@ -1,0 +1,96 @@
+#DESIGNING REACT COMPONENTS - Peter Kellner
+
+
+Using next.js which allows for server-side rendering and generating static websites
+-commands used to create app:
+    - manually make folder
+    - inside folder, run `npm init -y`
+    - to create app,  run `npm install react react-dom next`
+
+- Adding scrips: dev, build, start
+
+TIPS FOR COMPONENTS ARCHIQUECTURE
+- building blocks that when combined create a UI
+- independent reusable parts of an app
+- allow for easy building and great browser experience
+
+DESTRUCTURING AN ARRAY KEYS
+Why? to reduce complexity for js expressions in jsx and to declare values you need to use
+
+EXAMPLE OF USING SINGLE COMPONENT VS MULTIPLE COMPONENTS
+tip: refactor from inside out is easier
+
+function IndexPage() {
+    return(
+        SpeakersList(){
+            Speakers(){
+                Speaker(){
+                    Sessions(){
+                    }
+                }
+            }
+        }
+    )
+}
+
+function IndexPage(){
+    return (function SpeakersList() {})}
+function SpeakersList(){
+    return (function Speaker() {})}
+function Speaker(){
+    return (function Sessions() {})}
+function Sessions(){
+    return (function Session() {})}
+
+WAYS TO PASS PROPS
+1-
+FROM HERE
+function Sessions({ sessions }){
+    return(
+        <div>
+            <Session title={sessions.title} room={sessions.room} >
+        </div>
+    )
+}
+TO HERE
+function Session({ title, room }) {
+    return(
+        <span>{title}</span>
+        <span>{room}</span>
+    )
+}
+
+2- DESTRUCTURING IN CHILD COMPONENT
+FROM HERE
+function Sessions({ sessions }){
+    return(
+        <div>
+            <Session session={sessions} >
+        </div>
+    )
+}
+TO HERE
+function Session({ session }) {
+    const { title, room } = session;
+    return(
+        <span>{title}</span>
+        <span>{room}</span>
+    )
+}
+
+3- DESTRUCTURING IN PARENT COMPONENT
+FROM HERE
+function Sessions({ sessions }){
+    return(
+        <div>
+            <Session {...sessions} >
+        </div>
+    )
+}
+TO HERE
+function Session({ title, room }) {
+    return(
+        <span>{title}</span>
+        <span>{room}</span>
+    )
+}
